@@ -2,12 +2,19 @@
     {{#if products}}
         <h2>Products</h2>
         {{#each products}}
-            <div>
-                <img id="image{{this.id}}" src="{{this.image}}" height="100px" width="100px">
+            <div class="item">
+                <img id="image{{this.id}}" src="{{this.image}}" height="100px" width="100px"
+                    onerror="applyPlaceholder({{this.id}});">
                 <h4>{{ this.name }}</h4>
+                {{#if this.description}}
+                <i>{{this.description}}</i>
+                {{/if}}
+                <p>$ {{this.price}}</p>
             </div>
         {{/each}}
     {{else}}
         <h4>There are no products at this moment.</h4>
     {{/if}}
 </div>
+
+<script src="/scripts/view-products.js"></script>
