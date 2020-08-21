@@ -1,0 +1,13 @@
+<div class="container">
+    {{#if products}}
+        <h2>Products</h2>
+        {{#each products}}
+            <div>
+                <img id="image{{this.id}}" src="{{this.image}}" height="100px" width="100px">
+                <h4>{{ this.name }}</h4>
+            </div>
+        {{/each}}
+    {{else}}
+        <h4>There are no products at this moment.</h4>
+    {{/if}}
+</div>
