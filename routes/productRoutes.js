@@ -21,14 +21,32 @@ router.get('/:id', function (req, res) {
     (async () => {
         if(productId && !isNaN(productId)){
             product = await productService.getProductById(productId);
-            res.render('view-product',
-                {
-                    title: name
-                    , product: product
-                }
-            );
+            if(isEmptyObject(product.name)){
+                res.render('404',
+                    {
+                        title: name
+                    }
+                );
+            }
+            else {
+                res.render('view-product',
+                    {
+                        title: name
+                        , product: product
+                    }
+                );
+            }
         }
     })();
 });
+
+function isEmptyObject(obj) {
+    for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 module.exports = router;

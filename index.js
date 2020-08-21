@@ -18,6 +18,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routes
 app.use('/product', productRoutes);
 
+app.get('*', function(req, res){
+    res.render('404',
+        {
+            title: "Crud App"
+        }
+    );
+});
+
 const port = 3030;
 app.listen(port,
     () =>

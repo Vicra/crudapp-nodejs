@@ -15,7 +15,7 @@ class ProductService {
                 return [];
         } catch (error) {
             console.log(error);
-            return error.response;
+            return [];
         }
     }
 
@@ -26,10 +26,10 @@ class ProductService {
             if (HttpResponse.success)
                 return HttpResponse.data;
             else
-                return [];
+                return {};
         } catch (error) {
             console.log(error);
-            return error.response;
+            return {};
         }
     }
 }
