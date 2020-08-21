@@ -18,6 +18,20 @@ class ProductService {
             return error.response;
         }
     }
+
+    async getProductById(productId) {
+        try {
+            const response = await axios.get(`${this.host}/product/${productId}`);
+            let HttpResponse = response.data;
+            if (HttpResponse.success)
+                return HttpResponse.data;
+            else
+                return [];
+        } catch (error) {
+            console.log(error);
+            return error.response;
+        }
+    }
 }
 
 module.exports = new ProductService();

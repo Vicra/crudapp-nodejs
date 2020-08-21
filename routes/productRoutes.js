@@ -9,10 +9,25 @@ router.get('/', function (_, res) {
         products = await productService.getProducts();
         res.render('view-products',
             {
-                name: name
+                title: name
                 , products: products
             }
         );
+    })();
+});
+
+router.get('/:id', function (req, res) {
+    const productId = req.params.id;
+    (async () => {
+        if(productId && !isNaN(productId)){
+            product = await productService.getProductById(productId);
+            res.render('view-product',
+                {
+                    title: name
+                    , product: product
+                }
+            );
+        }
     })();
 });
 

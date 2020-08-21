@@ -5,7 +5,9 @@
             <div class="item">
                 <img id="image{{this.id}}" src="{{this.image}}" height="100px" width="100px"
                     onerror="applyPlaceholder({{this.id}});">
-                <h4>{{ this.name }}</h4>
+                <a href="/product/{{this.id}}">
+                    <h4>{{ this.name }}</h4>
+                </a>
                 {{#if this.description}}
                 <i>{{this.description}}</i>
                 {{/if}}
@@ -13,7 +15,7 @@
             </div>
         {{/each}}
     {{else}}
-        <h4>There are no products at this moment.</h4>
+        <p>There are no products at this moment.</p>
     {{/if}}
 </div>
 

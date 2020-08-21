@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="self-item">
+        {{#if product}}
+            <h3>{{ product.name }}</h3>
+            <img id="image{{product.id}}" src="{{product.image}}" height="300px" width="300px"
+                onerror="applyPlaceholder({{product.id}});">
+            <br>
+            {{#if product.description}}
+                <i>{{product.description}}</i>
+            {{else}}
+                <i>No description</i>
+            {{/if}}
+            <p>$ {{product.price}}</p>
+        {{else}}
+            <p>Product not available at this moment.</p>
+        {{/if}}
+    </div>
+</div>
+
+<script src="/scripts/view-products.js"></script>
