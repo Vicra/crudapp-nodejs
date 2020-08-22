@@ -1,0 +1,68 @@
+<div class="container">
+    <h1>Productos</h1><br>
+    <a href="/create-product" class="btn btn-success" role="button">
+        <i class="fa fa-plus-circle" aria-hidden="true"></i> Create Product
+    </a>
+</div>
+
+{{#if success}}
+  <div class="container">
+    <div class="alert alert-success" role="alert">
+        Product created successfully.
+    </div>
+  </div>
+{{/if}}
+
+{{#if updated}}
+  <div class="container">
+    <div class="alert alert-success" role="alert">
+        Product updated.
+    </div>
+  </div>
+{{/if}}
+
+<div class="container">
+    <table id="productsTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Imagen</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products }}
+            <tr>
+                <td><img id="image{{this.id}}" src="{{ this.image }}" onerror="applyPlaceholder({{this.id}}, '{{this.alt}}');"
+                        height="50px" width="50px"></td>
+                <td>{{ this.name }}</td>
+                <td>{{ this.description }}</td>
+                <td>{{ this.category }}</td>
+                <td>$ {{ this.price }}</td>
+                <td>
+                    <a href="/edit-product/{{ this.id }}" class="btn btn-info" role="button">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="/delete-product/{{ this.id }}" class="btn btn-danger" role="button">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#productsTable').DataTable();
+    });
+</script>
+
+<script src="/scripts/view-products.js"></script>

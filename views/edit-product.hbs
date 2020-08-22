@@ -1,0 +1,105 @@
+<div class="container">
+    <a href="/products" class="btn btn-success" role="button">
+        Products
+    </a>
+    <h1>Edit Product</h1>
+
+    <form action="/update-product" name="submitproduct" method="POST">
+        <input type="number" hidden="true" value="{{product.id}}" name="id">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{product.name}}">
+
+            <div class="alert alert-danger" role="alert" style="display: none;" id="enterName">
+                Enter name.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Description</label>
+            <input type="text" class="form-control" id="description" name="description" value="{{product.description}}">
+        </div>
+
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" name="categoryId">
+                <option value=""><i></i></option>
+                {{#each categories }}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="price" class="col-form-label">Price</label>
+            <div>
+                {{#if product.price}}
+                    <input class="form-control" type="number" id="price" name="price" value="{{product.price}}">
+                {{else}}
+                    <input class="form-control" type="number" id="price" name="price" value="0">
+                {{/if}}
+            </div>
+
+            <div class="alert alert-danger" role="alert" style="display: none;" id="enterPrice">
+                Enter the price.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="url" class="col-form-label">URL Image</label>
+            <div>
+                {{#if product.image}}
+                    <input class="form-control" type="url" id="url"
+                        name="url" value="{{product.image}}">
+                {{else}}
+                    <input class="form-control" type="url" id="url"
+                        name="url" value="http://image.png">
+                {{/if}}
+            </div>
+
+            <div class="alert alert-danger" role="alert" style="display: none;" id="enterUrl">
+                Enter url for image.
+            </div>
+        </div>
+
+        <div class="text-right">
+            <a onclick="validate();" type="button" class="btn btn-success">Update</a>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    $(function() {
+        $("#category").val({{product.categoryId}});
+    });
+
+    function validate() {
+        const delay = 6000;//6seconds
+
+        let params = {};
+        params.name = $('#name').val();
+        params.description = $('#description').val();
+        params.category = $('#category').val();
+        params.price = $('#price').val();
+        params.url = $('#url').val();
+
+        let hasError = false;
+        if (!params.name) {
+            hasError = true;
+            $('#enterName').fadeIn().delay(delay).fadeOut();
+        }
+        if (!params.price) {
+            hasError = true;
+            $('#enterPrice').fadeIn().delay(delay).fadeOut();
+        }
+        if (!params.url) {
+            hasError = true;
+            $('#enterUrl').fadeIn().delay(delay).fadeOut();
+        }
+
+        if (!hasError) {
+            $("form[name='submitproduct']").submit();
+        }
+    }
+</script>

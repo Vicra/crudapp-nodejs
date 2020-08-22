@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const hbs = require('hbs');
 
 var productRoutes = require('./routes/productRoutes');
+var adminProductsRoutes = require('./routes/adminProductsRoutes');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,7 +17,8 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
-app.use('/product', productRoutes);
+app.use('/', productRoutes);
+app.use('/', adminProductsRoutes);
 
 app.get('*', function(req, res){
     res.render('404',

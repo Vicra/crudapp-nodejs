@@ -3,25 +3,27 @@ const router = express.Router();
 const name = "Crud App";
 
 const productService = require('../services/productService');
+const categoryService = require('../services/categoryService');
 
-router.get('/', function (_, res) {
+router.get('/products', function (_, res) {
     (async () => {
         products = await productService.getProducts();
-        res.render('view-products',
+        res.render('products',
             {
                 title: name
                 , products: products
-                , type: 1
             }
         );
     })();
 });
 
-router.get('/product/:id', function (req, res) {
+router.get('/edit-product/:id', function (req, res) {
     const productId = req.params.id;
     (async () => {
         if(productId && !isNaN(productId)){
             product = await productService.getProductById(productId);
+            categories = await categoryService.getCategories();
+            
             if(isEmptyObject(product.name)){
                 res.render('404',
                     {
@@ -31,11 +33,11 @@ router.get('/product/:id', function (req, res) {
                 );
             }
             else {
-                res.render('view-product',
+                res.render('edit-product',
                     {
                         title: name
                         , product: product
-                        , type: 1
+                        , categories: categories
                     }
                 );
             }
