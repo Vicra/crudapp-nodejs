@@ -28,7 +28,7 @@
         </div>
 
         <div class="text-left">
-            <a onclick="validate();" type="button" class="btn btn-success">Register</a>
+            <a onclick="validate();" type="submit" class="btn btn-success">Register</a>
         </div>
     </form>
 
@@ -59,4 +59,11 @@
             $("form[name='login']").submit();
         }
     }
+
+    $('body').keypress(function(e){
+        if (e.keyCode == 13)
+        {
+            validate();
+        }
+    });
 </script>

@@ -27,10 +27,11 @@ router.get('/products', function (req, res) {
     })();
 });
 
-router.get("/authenticate", function (_, res) {
+router.get("/authenticate", function (req, res) {
     (async () => {
         res.render("login", {
             title: name
+            , success : req.query.s
         });
     })();
 });
@@ -72,11 +73,12 @@ router.post("/register", function (req, res) {
     (async () => {
         let response = await adminService.registerUser(params);
         if(response.success){
-            res.redirect('/authenticate');
+            res.redirect('/authenticate?s=1');
         }
         else {
             res.render("register", {
                 title: name
+                , message: response.message
             });
         }
     })();

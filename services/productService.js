@@ -2,7 +2,8 @@ const axios = require('axios');
 
 class ProductService {
     constructor() {
-        this.host = "https://crudapi-nodejs.herokuapp.com";
+        // this.host = "http://localhost:3000";
+        this.host = "https://crudapi-nodejs.herokuapp.com";    
     }
 
     async getProducts() {
