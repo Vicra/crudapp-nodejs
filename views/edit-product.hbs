@@ -15,7 +15,7 @@
     <form action="/update-product" name="submitproduct" method="POST">
         <input type="number" hidden="true" value="{{product.id}}" name="id">
         <div class="form-group">
-            <label for="name">Name</label>
+            <strong><label for="name">* Name</label></strong>
             <input type="text" class="form-control" id="name" name="name" value="{{product.name}}">
 
             <div class="alert alert-danger" role="alert" style="display: none;" id="enterName">
@@ -29,17 +29,20 @@
         </div>
 
         <div class="form-group">
-            <label for="category">Category</label>
+            <strong><label for="category">* Category</label></strong>
             <select class="form-control" id="category" name="categoryId">
                 <option value=""><i></i></option>
                 {{#each categories }}
                     <option value="{{this.id}}">{{this.name}}</option>
                 {{/each}}
             </select>
+            <div class="alert alert-danger" role="alert" style="display: none;" id="enterCategory">
+                Select a category.
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="price" class="col-form-label">Price</label>
+            <strong><label for="price" class="col-form-label">* Price</label></strong>
             <div>
                 {{#if product.price}}
                     <input class="form-control" type="number" id="price" name="price" value="{{product.price}}">
@@ -54,7 +57,7 @@
         </div>
 
         <div class="form-group">
-            <label for="url" class="col-form-label">URL Image</label>
+            <strong><label for="url" class="col-form-label">* URL Image</label></strong>
             <div>
                 {{#if product.image}}
                     <input class="form-control" type="url" id="url"
@@ -100,6 +103,10 @@
         if (!params.price) {
             hasError = true;
             $('#enterPrice').fadeIn().delay(delay).fadeOut();
+        }
+        if (!params.category) {
+            hasError = true;
+            $('#enterCategory').fadeIn().delay(delay).fadeOut();
         }
         if (!params.url) {
             hasError = true;
