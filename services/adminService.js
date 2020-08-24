@@ -2,7 +2,7 @@ const axios = require('axios');
 
 class UserService {
     constructor() {
-        this.host = "http://localhost:3000";
+        this.host = "https://crudapi-nodejs.herokuapp.com";
     }
 
     async isValidUser(user) {
