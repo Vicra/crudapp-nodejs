@@ -20,7 +20,7 @@ app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: true
-}));
+}))
 
 // routes
 app.use('/', productRoutes);
@@ -34,7 +34,7 @@ app.get('*', function(req, res){
     );
 });
 
-const port = 3030;
+const port = process.env.PORT || 3030;
 app.listen(port,
     () =>
         console.log(`http://localhost:${port}/`));
