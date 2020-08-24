@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
+const session = require('express-session');
 
 var productRoutes = require('./routes/productRoutes');
 var adminProductsRoutes = require('./routes/adminProductsRoutes');
@@ -15,6 +16,11 @@ hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true
+}));
 
 // routes
 app.use('/', productRoutes);
@@ -31,4 +37,4 @@ app.get('*', function(req, res){
 const port = 3030;
 app.listen(port,
     () =>
-        console.log(`http://localhost:${port}/product`));
+        console.log(`http://localhost:${port}/`));

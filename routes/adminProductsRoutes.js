@@ -4,20 +4,52 @@ const name = "Crud App";
 
 const productService = require('../services/productService');
 const categoryService = require('../services/categoryService');
+const adminService = require('../services/adminService');
 
 router.get('/products', function (req, res) {
     (async () => {
-        products = await productService.getProducts();
-        res.render('products',
-            {
+        if(req.session.admin){
+            products = await productService.getProducts();
+            res.render('products',
+                {
+                    title: name
+                    , products: products
+                    , updated: req.query.u
+                    , deleted: req.query.d
+                    , message: req.query.m
+                    , success: req.query.s
+                }
+            );
+        }
+        else{
+            res.redirect('/authenticate');
+        }
+    })();
+});
+
+router.get("/authenticate", function (_, res) {
+    (async () => {
+        res.render("login", {
+            title: name
+        });
+    })();
+});
+
+router.post("/authenticate", function (req, res) {
+    let params = req.body;
+    (async () => {
+        let response = await adminService.isValidUser(params);
+        console.log(response);
+        if(response.success){
+            req.session.admin = response.data;
+            res.redirect('/products');
+        }
+        else {
+            res.render("login", {
                 title: name
-                , products: products
-                , updated: req.query.u
-                , deleted: req.query.d
-                , message: req.query.m
-                , success: req.query.s
-            }
-        );
+                ,message: response.message
+            });
+        }
     })();
 });
 
@@ -63,7 +95,7 @@ router.post('/update-product', function (req, res) {
     })();
 });
 
-router.post('/delete-product', function (req, res) {
+router.get('/delete-product/:id', function (req, res) {
     let productId = req.params.id;
     (async () => {
         let response = await productService.deleteProduct(productId);

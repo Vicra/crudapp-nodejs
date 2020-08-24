@@ -1,0 +1,57 @@
+{{#if message}}
+    <div class="container">
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+    </div>
+{{/if}}
+
+<div class="container">
+    <form action="/authenticate" method="POST" name="login">
+        <div class="form-group">
+            <label for="user">User</label>
+            <input type="text" class="form-control" id="user" name="user">
+
+            <div class="alert alert-danger" role="alert" style="display: none;" id="enterUser">
+                Enter the user.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+
+            <div class="alert alert-danger" role="alert" style="display: none;" id="enterPassword">
+                Enter the password
+            </div>
+        </div>
+
+        <div class="text-left">
+            <a onclick="validate();" type="button" class="btn btn-success">Login</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function validate() {
+        const delay = 6000;//6seconds
+
+        let params = {};
+        params.user = $('#user').val();
+        params.password = $('#password').val();
+
+        let hasError = false;
+        if (!params.user) {
+            hasError = true;
+            $('#enterUser').fadeIn().delay(delay).fadeOut();
+        }
+        if (!params.password) {
+            hasError = true;
+            $('#enterPassword').fadeIn().delay(delay).fadeOut();
+        }
+
+        if (!hasError) {
+            $("form[name='login']").submit();
+        }
+    }
+</script>

@@ -54,6 +54,17 @@ class ProductService {
             return error.response;
         }
     }
+
+    async deleteProduct(productId){
+        try {
+            const response = await axios.delete(`${this.host}/product/${productId}`);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            return {};
+        }
+    }
+    
 }
 
 module.exports = new ProductService();
