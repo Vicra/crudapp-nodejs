@@ -3,8 +3,10 @@
         <h2>Products</h2>
         {{#each products}}
             <div class="item">
-                <img id="image{{this.id}}" src="{{this.image}}" height="100px" width="100px"
+                <a href="/product/{{this.id}}">
+                    <img id="image{{this.id}}" src="{{this.image}}" height="100px" width="100px"
                     onerror="applyPlaceholder({{this.id}});">
+                </a>
                 <a href="/product/{{this.id}}">
                     <h4>{{ this.name }}</h4>
                 </a>
