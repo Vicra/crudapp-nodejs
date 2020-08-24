@@ -13,6 +13,9 @@ router.get('/products', function (req, res) {
                 title: name
                 , products: products
                 , updated: req.query.u
+                , deleted: req.query.d
+                , message: req.query.m
+                , success: req.query.s
             }
         );
     })();
@@ -56,6 +59,46 @@ router.post('/update-product', function (req, res) {
         }
         else {
             res.redirect('/products?u=1');
+        }
+    })();
+});
+
+router.post('/delete-product', function (req, res) {
+    let productId = req.params.id;
+    (async () => {
+        let response = await productService.deleteProduct(productId);
+        if (response.code != 200) {
+            res.redirect(`/products?m=${response.message}`);
+        }
+        else {
+            res.redirect('/products?d=1');
+        }
+    })();
+});
+
+router.get('/create-product', function (req, res) {
+    (async () => {
+        categories = await categoryService.getCategories();
+
+        res.render('create-product',
+            {
+                title: name
+                , categories: categories
+                , message: req.query.m
+            }
+        );
+    })();
+});
+
+router.post('/save-product', function (req, res) {
+    let params = req.body;
+    (async () => {
+        let response = await productService.postProduct(params);
+        if (response.code != 200) {
+            res.redirect(`/create-product/?m=${response.data.message}`);
+        }
+        else {
+            res.redirect('/products?s=1');
         }
     })();
 });

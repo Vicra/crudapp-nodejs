@@ -43,6 +43,17 @@ class ProductService {
             return error.response;
         }
     }
+
+    async postProduct(product){
+        product.image = product.url;
+        try {
+            const response = await axios.post(`${this.host}/product/`, product);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            return error.response;
+        }
+    }
 }
 
 module.exports = new ProductService();

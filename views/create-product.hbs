@@ -1,0 +1,109 @@
+{{#if message}}
+    <div class="container">
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+    </div>
+{{/if}}
+
+<div class="container">
+    <a href="/products" class="btn btn-info" role="button">
+        Products
+    </a>
+    <h1>Create Product</h1>
+
+    <form action="/save-product" name="submitproduct" method="POST">
+        <div class="form-group">
+            <strong><label for="name">* Name</label></strong>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Product Name">
+
+            <div class="alert alert-danger" role="alert" style="display: none;" id="enterName">
+                Enter name.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Description</label>
+            <input type="text" class="form-control" id="description" name="description" placeholder="Product Description">
+        </div>
+
+        <div class="form-group">
+            <strong><label for="category">* Category</label></strong>
+            <select class="form-control" id="category" name="categoryId">
+                <option value=""><i></i></option>
+                {{#each categories }}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+            <div class="alert alert-danger" role="alert" style="display: none;" id="enterCategory">
+                Select a category.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <strong><label for="price" class="col-form-label">* Price</label></strong>
+            <div>
+                <input class="form-control" type="number" id="price" name="price" placeholder="0">
+            </div>
+
+            <div class="alert alert-danger" role="alert" style="display: none;" id="enterPrice">
+                Enter the price.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <strong><label for="url" class="col-form-label">* URL Image</label></strong>
+            <div>
+                <input class="form-control" type="url" id="url" name="url" placeholder="http://image.png">
+            </div>
+
+            <div class="alert alert-danger" role="alert" style="display: none;" id="enterUrl">
+                Enter url for image.
+            </div>
+        </div>
+
+        <div class="text-right">
+            <a onclick="validate();" type="button" class="btn btn-success">Update</a>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    $(function() {
+        $("#category").val({{product.categoryId}});
+    });
+
+    function validate() {
+        const delay = 6000;//6seconds
+
+        let params = {};
+        params.name = $('#name').val();
+        params.description = $('#description').val();
+        params.category = $('#category').val();
+        params.price = $('#price').val();
+        params.url = $('#url').val();
+
+        let hasError = false;
+        if (!params.name) {
+            hasError = true;
+            $('#enterName').fadeIn().delay(delay).fadeOut();
+        }
+        if (!params.price) {
+            hasError = true;
+            $('#enterPrice').fadeIn().delay(delay).fadeOut();
+        }
+        if (!params.category) {
+            hasError = true;
+            $('#enterCategory').fadeIn().delay(delay).fadeOut();
+        }
+        if (!params.url) {
+            hasError = true;
+            $('#enterUrl').fadeIn().delay(delay).fadeOut();
+        }
+
+        if (!hasError) {
+            $("form[name='submitproduct']").submit();
+        }
+    }
+</script>

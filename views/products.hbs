@@ -21,6 +21,22 @@
   </div>
 {{/if}}
 
+{{#if deleted}}
+  <div class="container">
+    <div class="alert alert-success" role="alert">
+        Product deleted.
+    </div>
+  </div>
+{{/if}}
+
+{{#if message}}
+  <div class="container">
+    <div class="alert alert-danger" role="alert">
+        {{message}}
+    </div>
+  </div>
+{{/if}}
+
 <div class="container">
     <table id="productsTable" class="display" style="width:100%">
         <thead>
