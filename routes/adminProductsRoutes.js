@@ -39,7 +39,6 @@ router.post("/authenticate", function (req, res) {
     let params = req.body;
     (async () => {
         let response = await adminService.isValidUser(params);
-        console.log(response);
         if(response.success){
             req.session.admin = response.data;
             res.redirect('/products');
@@ -48,6 +47,36 @@ router.post("/authenticate", function (req, res) {
             res.render("login", {
                 title: name
                 ,message: response.message
+            });
+        }
+    })();
+});
+
+router.get("/logout", function (req, res) {
+    req.session.admin = null;
+    (async () => {
+        res.redirect('/authenticate');
+    })();
+});
+
+router.get("/register", function (_, res) {
+    (async () => {
+        res.render("register", {
+            title: name
+        });
+    })();
+});
+
+router.post("/register", function (req, res) {
+    let params = req.body;
+    (async () => {
+        let response = await adminService.registerUser(params);
+        if(response.success){
+            res.redirect('/authenticate');
+        }
+        else {
+            res.render("register", {
+                title: name
             });
         }
     })();

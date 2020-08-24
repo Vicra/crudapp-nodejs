@@ -16,6 +16,18 @@ class UserService {
             return error.response.data;
         }
     }
+
+    async registerUser(user){
+        try {
+            let response = await axios.post(`${this.host}/admin/register`, {
+                user: user.user,
+                password: user.password
+            });
+            return response.data;
+        } catch (error) {
+            return error.response.data;
+        }
+    }
 }
 
 module.exports = new UserService();

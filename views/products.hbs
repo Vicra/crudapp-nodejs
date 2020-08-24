@@ -3,7 +3,14 @@
     <a href="/create-product" class="btn btn-success" role="button">
         <i class="fa fa-plus-circle" aria-hidden="true"></i> Create Product
     </a>
+
+    <div class="text-right">
+        <a href="/logout" class="btn btn-danger" role="button">
+            Logout
+        </a>
+    </div>
 </div>
+
 
 {{#if success}}
     <div class="container">
@@ -73,6 +80,9 @@
             {{/each}}
         </tbody>
     </table>
+    <a href="/" role="button">
+        <i class="fa fa-check" aria-hidden="true"></i> View Products
+    </a>
 </div>
 
 <script>

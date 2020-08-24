@@ -7,8 +7,8 @@
 {{/if}}
 
 <div class="container">
-    <h3>Login</h3>
-    <form action="/authenticate" method="POST" name="login">
+    <h3>Register</h3>
+    <form action="/register" method="POST" name="login">
         <div class="form-group">
             <label for="user">User</label>
             <input type="text" class="form-control" id="user" name="user">
@@ -28,11 +28,12 @@
         </div>
 
         <div class="text-left">
-            <a onclick="validate();" type="button" class="btn btn-success">Login</a>
+            <a onclick="validate();" type="button" class="btn btn-success">Register</a>
         </div>
     </form>
-    <a href="/register" role="button">
-        <i class="fa fa-user" aria-hidden="true"></i> Don't have an account?
+
+    <a href="/authenticate" role="button">
+        <i class="fa fa-user" aria-hidden="true"></i> Already have an account?
     </a>
 </div>
 
