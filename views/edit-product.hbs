@@ -1,5 +1,13 @@
+{{#if message}}
+    <div class="container">
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+    </div>
+{{/if}}
+
 <div class="container">
-    <a href="/products" class="btn btn-success" role="button">
+    <a href="/products" class="btn btn-info" role="button">
         Products
     </a>
     <h1>Edit Product</h1>

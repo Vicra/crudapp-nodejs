@@ -32,6 +32,17 @@ class ProductService {
             return {};
         }
     }
+
+    async putProduct(product){
+        product.image = product.url;
+        try {
+            const response = await axios.put(`${this.host}/product/${product.id}`, product);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            return error.response;
+        }
+    }
 }
 
 module.exports = new ProductService();
