@@ -56,28 +56,33 @@ router.post("/authenticate", function (req, res) {
 router.get('/edit-product/:id', function (req, res) {
     const productId = req.params.id;
     (async () => {
-        if(productId && !isNaN(productId)){
-            product = await productService.getProductById(productId);
-            categories = await categoryService.getCategories();
-            
-            if(isEmptyObject(product.name)){
-                res.render('404',
-                    {
-                        title: name
-                        , type: 1
-                    }
-                );
+        if(req.session.admin){
+            if(productId && !isNaN(productId)){
+                product = await productService.getProductById(productId);
+                categories = await categoryService.getCategories();
+                
+                if(isEmptyObject(product.name)){
+                    res.render('404',
+                        {
+                            title: name
+                            , type: 1
+                        }
+                    );
+                }
+                else {
+                    res.render('edit-product',
+                        {
+                            title: name
+                            , product: product
+                            , categories: categories
+                            , message: req.query.m
+                        }
+                    );
+                }
             }
-            else {
-                res.render('edit-product',
-                    {
-                        title: name
-                        , product: product
-                        , categories: categories
-                        , message: req.query.m
-                    }
-                );
-            }
+        }
+        else{
+            res.redirect('/authenticate');
         }
     })();
 });
@@ -98,27 +103,36 @@ router.post('/update-product', function (req, res) {
 router.get('/delete-product/:id', function (req, res) {
     let productId = req.params.id;
     (async () => {
-        let response = await productService.deleteProduct(productId);
-        if (response.code != 200) {
-            res.redirect(`/products?m=${response.message}`);
+        if(req.session.admin){
+            let response = await productService.deleteProduct(productId);
+            if (response.code != 200) {
+                res.redirect(`/products?m=${response.message}`);
+            }
+            else {
+                res.redirect('/products?d=1');
+            }
         }
-        else {
-            res.redirect('/products?d=1');
+        else{
+            res.redirect('/authenticate');
         }
     })();
 });
 
 router.get('/create-product', function (req, res) {
     (async () => {
-        categories = await categoryService.getCategories();
-
-        res.render('create-product',
-            {
-                title: name
-                , categories: categories
-                , message: req.query.m
-            }
-        );
+        if(req.session.admin){
+            categories = await categoryService.getCategories();
+            res.render('create-product',
+                {
+                    title: name
+                    , categories: categories
+                    , message: req.query.m
+                }
+            );
+        }
+        else{
+            res.redirect('/authenticate');
+        }
     })();
 });
 
